@@ -3,11 +3,14 @@
 </script>
 
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat class="pa-3" elevation="5">
     <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-6" />
-
-      Essentials Preset
+      <img
+        height="50"
+        width="150"
+        src="../../assets/pokelogo.png"
+        alt="pokevuedex"
+      />
     </v-app-bar-title>
   </v-app-bar>
 </template>
