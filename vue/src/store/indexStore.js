@@ -6,7 +6,9 @@ export const indexStore = defineStore('pokedex', {
     state(){
         return {
             pokemons: [],
-            selectedPokemon: null
+            selectedPokemon: null,
+            weakness: [],
+            evolutions: []
         }
     },
 
@@ -51,12 +53,40 @@ export const indexStore = defineStore('pokedex', {
         this.stopLoading();
       },
       async getPokemon(slug){
+        this.startLoading();
         await axiosClient.get(`https://pokeapi.co/api/v2/pokemon/${slug}`)
         .then(({data}) => {
             this.$patch({
               selectedPokemon: data
             })
         })
+      },
+      async getWeakness(type){
+        await axiosClient.get(`https://pokeapi.co/api/v2/type/${type}`)
+        .then(({data}) => {
+            this.$patch({
+              weakness: data
+            })
+        })
+        this.stopLoading();
+      },
+      async getEvolutions(pokemon){
+        console.log(pokemon)
+        this.startLoading();
+        this.evolutions = [];
+        await axiosClient.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon}`)
+        .then(async ({data}) => {
+          await axiosClient.get(data.evolution_chain.url).then(({data}) => {
+            this.evolutions.push({order: 1, name: data.chain.species.name});
+            if(data.chain.evolves_to.length > 0){
+              data.chain.evolves_to.forEach(ev => {
+                this.evolutions.push({order: this.evolutions.length + 1, name: ev.species.name});
+              })
+            }
+            console.log(this.evolutions)
+          })
+        })
+        this.stopLoading();
       },
       async startLoading(){
         Loading.init({

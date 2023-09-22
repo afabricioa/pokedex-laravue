@@ -16,7 +16,7 @@
   const dialog = ref(false);
 
   function handleDialog(){
-    dialog.value = true;
+    dialog.value = !dialog.value;
   }
 
 </script>
@@ -55,8 +55,8 @@
       </div>
     </v-card>
   </v-hover>
-  <v-dialog v-model="dialog" persistent max-width="290">
-    <ModalPokedex :slug="slug" />
+  <v-dialog v-model="dialog" max-width="425">
+    <ModalPokedex :name="name" :slug="slug" :mainType="type ? type[0] : ''" @handleCloseDialog="handleDialog"/>
   </v-dialog>
 </template>
 
