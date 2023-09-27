@@ -31,7 +31,6 @@
 
 <template>
   <div v-if="store.selectedPokemon" class="pokedex">
-    <pre>{{ store.evolutions }}</pre>
     <v-btn variant="text" color="grey-lighten-3" class="close" @click="$emit('handleCloseDialog')">Close</v-btn>
     <div class="image">
       <img
@@ -60,9 +59,9 @@
         </v-row>
       </v-container>
     </div>
-    <div class="evolutions" @click="handleEvolution">
+    <!-- <div class="evolutions" @click="handleEvolution">
       <h3 class="pa-1">Evolutions</h3>
-    </div>
+    </div> -->
     <img
         src="../assets/pokedex.png"
         alt="pokedex"
